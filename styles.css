@@ -129,16 +129,17 @@ h2 { font-size: clamp(1.35rem, 2.5vw, 1.9rem); line-height: 1.15; }
 
 .primary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .service-card {
-  min-height: 250px;
-  padding: 26px;
+  min-height: 174px;
+  padding: 24px 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
   box-shadow: var(--shadow);
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto 1fr;
-  gap: 22px 12px;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  grid-template-rows: 1fr;
+  align-items: center;
+  gap: 16px;
   text-align: left;
   cursor: pointer;
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
@@ -158,10 +159,10 @@ h2 { font-size: clamp(1.35rem, 2.5vw, 1.9rem); line-height: 1.15; }
   color: var(--navy);
 }
 .card-icon svg { width: 25px; height: 25px; }
-.card-body { align-self: end; }
-.card-title { display: block; font-family: "PT Serif", Georgia, serif; font-weight: 700; font-size: 1.55rem; line-height: 1.12; }
+.card-body { align-self: center; min-width: 0; }
+.card-title { display: block; font-family: "PT Serif", Georgia, serif; font-weight: 700; font-size: 1.48rem; line-height: 1.12; }
 .card-copy { display: block; margin-top: 9px; color: var(--muted); line-height: 1.55; font-size: .94rem; }
-.card-arrow { font-size: 1.45rem; color: var(--navy); }
+.card-arrow { align-self: center; display: block; color: var(--navy); font-size: 1.5rem; line-height: 1; transform: translateY(-1px); }
 
 .quick-contact {
   border-top: 1px solid var(--line);
@@ -326,8 +327,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); box-shado
 
 @media (max-width: 900px) {
   .primary-grid { grid-template-columns: 1fr; }
-  .service-card { min-height: 160px; grid-template-columns: auto 1fr auto; grid-template-rows: 1fr; align-items: center; }
-  .card-body { align-self: center; }
+  .service-card { min-height: 150px; }
   .channel-grid { grid-template-columns: 1fr 1fr; }
   .channel { border-bottom: 1px solid var(--line); }
   .channel:nth-child(2n) { border-right: 0; }
@@ -350,3 +350,4 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); box-shado
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
