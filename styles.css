@@ -351,3 +351,32 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); box-shado
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
+/* Structured address groups */
+.address-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.address-fields legend {
+  padding: 0 8px;
+  font-family: "PT Serif", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+#cancellation-reason-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+#cancellation-reason-fields[hidden],
+#cancellation-other-wrap[hidden] {
+  display: none !important;
+}

@@ -12,11 +12,31 @@
   const retentionOffer = document.getElementById('retention-offer');
   const retentionOfferLink = document.getElementById('retention-offer-link');
   const cancelRequestNote = document.getElementById('cancel-request-note');
+  const cancellationReasonFields = document.getElementById('cancellation-reason-fields');
+  const cancellationReason = document.getElementById('cancellation-reason');
+  const cancellationOtherWrap = document.getElementById('cancellation-other-wrap');
+  const cancellationReasonOther = document.getElementById('cancellation-reason-other');
+
+  function updateCancellationReasonUI() {
+    const isOther = cancellationReason && cancellationReason.value === 'Other';
+    if (cancellationOtherWrap) cancellationOtherWrap.hidden = !isOther;
+    if (cancellationReasonOther) {
+      cancellationReasonOther.required = Boolean(isOther);
+      if (!isOther) cancellationReasonOther.value = '';
+    }
+  }
 
   function updateStatusRequestUI() {
     if (!statusRequest) return;
     const isCancel = statusRequest.value === 'Cancel my subscription';
     if (cancelRequestNote) cancelRequestNote.hidden = !isCancel;
+    if (cancellationReasonFields) cancellationReasonFields.hidden = !isCancel;
+    if (cancellationReason) {
+      cancellationReason.required = isCancel;
+      if (!isCancel) cancellationReason.value = '';
+    }
+    if (!isCancel && cancellationReasonOther) cancellationReasonOther.value = '';
+    updateCancellationReasonUI();
 
     const hasOffer = Boolean(RETENTION_OFFER_URL);
     if (retentionOffer) retentionOffer.hidden = !(isCancel && hasOffer);
@@ -24,6 +44,7 @@
   }
 
   if (statusRequest) statusRequest.addEventListener('change', updateStatusRequestUI);
+  if (cancellationReason) cancellationReason.addEventListener('change', updateCancellationReasonUI);
 
   function validRoute(route) {
     return views.has(route) ? route : 'home';
@@ -101,7 +122,7 @@
         showView('success');
       } catch (error) {
         status.classList.add('error');
-        status.textContent = 'We could not submit this request. Please email washsub@washingtonian.com or call 202-296-3600.';
+        status.textContent = 'We could not submit this request. Please email washsub@washingtonian.com.';
       } finally {
         submit.disabled = false;
       }
