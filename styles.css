@@ -95,6 +95,7 @@ button { color: inherit; }
 .header-link:hover { color: var(--navy); }
 
 .app-shell { padding-block: clamp(44px, 8vw, 86px) 86px; min-height: calc(100vh - 154px); }
+#main:focus { outline: none; }
 .view { animation: enter .24s ease both; }
 .view[hidden] { display: none !important; }
 @keyframes enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
