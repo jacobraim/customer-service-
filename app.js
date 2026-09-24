@@ -8,42 +8,29 @@
   const historyStack = [];
   let currentView = 'home';
 
-  const statusRequest = document.getElementById('subscription-status-request');
   const retentionOffer = document.getElementById('retention-offer');
   const retentionOfferLink = document.getElementById('retention-offer-link');
-  const cancelRequestNote = document.getElementById('cancel-request-note');
-  const cancellationReasonFields = document.getElementById('cancellation-reason-fields');
   const cancellationReason = document.getElementById('cancellation-reason');
   const cancellationOtherWrap = document.getElementById('cancellation-other-wrap');
   const cancellationReasonOther = document.getElementById('cancellation-reason-other');
 
   function updateCancellationReasonUI() {
-    const isOther = cancellationReason && cancellationReason.value === 'Other';
+    if (!cancellationReason) return;
+
+    const hasReason = Boolean(cancellationReason.value);
+    const isOther = cancellationReason.value === 'Other';
+    const hasOffer = Boolean(RETENTION_OFFER_URL);
+
     if (cancellationOtherWrap) cancellationOtherWrap.hidden = !isOther;
     if (cancellationReasonOther) {
-      cancellationReasonOther.required = Boolean(isOther);
+      cancellationReasonOther.required = isOther;
       if (!isOther) cancellationReasonOther.value = '';
     }
-  }
 
-  function updateStatusRequestUI() {
-    if (!statusRequest) return;
-    const isCancel = statusRequest.value === 'Cancel my subscription';
-    if (cancelRequestNote) cancelRequestNote.hidden = !isCancel;
-    if (cancellationReasonFields) cancellationReasonFields.hidden = !isCancel;
-    if (cancellationReason) {
-      cancellationReason.required = isCancel;
-      if (!isCancel) cancellationReason.value = '';
-    }
-    if (!isCancel && cancellationReasonOther) cancellationReasonOther.value = '';
-    updateCancellationReasonUI();
-
-    const hasOffer = Boolean(RETENTION_OFFER_URL);
-    if (retentionOffer) retentionOffer.hidden = !(isCancel && hasOffer);
+    if (retentionOffer) retentionOffer.hidden = !(hasReason && hasOffer);
     if (retentionOfferLink && hasOffer) retentionOfferLink.href = RETENTION_OFFER_URL;
   }
 
-  if (statusRequest) statusRequest.addEventListener('change', updateStatusRequestUI);
   if (cancellationReason) cancellationReason.addEventListener('change', updateCancellationReasonUI);
 
   function validRoute(route) {
@@ -117,7 +104,7 @@
 
         document.getElementById('reference-number').textContent = result.reference || 'WASH-SUPPORT';
         form.reset();
-        updateStatusRequestUI();
+        updateCancellationReasonUI();
         status.textContent = '';
         showView('success');
       } catch (error) {
@@ -129,6 +116,6 @@
     });
   });
 
-  updateStatusRequestUI();
+  updateCancellationReasonUI();
   showView(routeFromLocation(), { pushHistory: false, replaceHash: true });
 })();

@@ -13,16 +13,6 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="site-header">
-    <div class="shell header-inner">
-      <button class="brand" type="button" data-route="home" aria-label="Washingtonian customer service home">
-        <span class="brand-name">Washingtonian</span>
-        <span class="brand-section">Customer Service</span>
-      </button>
-      <a class="header-link" href="https://washingtonian.com/" target="_blank" rel="noopener">Washingtonian.com</a>
-    </div>
-  </header>
-
   <main id="main" class="shell app-shell" tabindex="-1">
     <section class="view hero-view" data-view="home">
       <div class="hero-copy">
@@ -88,16 +78,15 @@
           <h2>Subscribe to Washingtonian</h2>
           <p>Washingtonian covers the people, places, food, culture, and ideas shaping the DC region.</p>
         </div>
-        <a class="button button-primary" href="https://washingtonian.com/subscribe/" target="_blank" rel="noopener">View Subscription Options</a>
+        <a class="button button-primary" href="https://shop.washingtonian.com/collections/all-products/subscriptions" target="_blank" rel="noopener">View Subscription Options</a>
       </div>
 
-      <div class="info-card">
-        <p class="mini-label">Already subscribe?</p>
-        <h2>Manage an existing subscription</h2>
-        <p>Use the subscriber portal for account access, or contact Subscriber Services for help.</p>
+      <div class="info-card gift-card">
+        <p class="mini-label">Give Washingtonian</p>
+        <h2>Give a Gift Subscription</h2>
+        <p>Send Washingtonian to someone who wants the best of the DC region delivered to their door.</p>
         <div class="button-row">
-          <a class="button button-secondary" href="https://w1.buysub.com/servlet/CSGateway?cds_mag_code=WSH&cds_page_id=22265" target="_blank" rel="noopener">Open Subscriber Portal</a>
-          <button class="button button-linklike" type="button" data-route="support">Get Subscription Help</button>
+          <a class="button button-secondary" href="https://w1.buysub.com/pubs/WH/WSH/gift_0916.jsp?cds_page_id=206727&amp;cds_mag_code=WSH&amp;id=1790273392262&amp;lsid=62671309495011665&amp;vid=3" target="_blank" rel="noopener">Give a Gift</a>
         </div>
       </div>
     </section>
@@ -125,15 +114,15 @@
       </div>
 
       <div class="support-grid">
-        <button class="support-card" type="button" data-route="form-account"><span>Account or billing</span><small>Charges, payment information, or account questions</small><b aria-hidden="true">→</b></button>
+        <button class="support-card" type="button" data-route="form-account"><span>Account or billing</span><small>Charges, payment information, digital edition access, or account questions</small><b aria-hidden="true">→</b></button>
         <button class="support-card" type="button" data-route="form-delivery"><span>Missing or damaged issue</span><small>Report a delivery problem with a print issue</small><b aria-hidden="true">→</b></button>
         <button class="support-card" type="button" data-route="form-address"><span>Change mailing address</span><small>Send us your new delivery address</small><b aria-hidden="true">→</b></button>
-        <button class="support-card" type="button" data-route="form-status"><span>Renew or cancel</span><small>Ask for help with your subscription status</small><b aria-hidden="true">→</b></button>
+        <a class="support-card" href="https://w1.buysub.com/pubs/WH/WSH/renewal-entry.jsp?cds_page_id=207181&amp;cds_mag_code=WSH&amp;id=1790273582075&amp;lsid=62671309495011665&amp;vid=4" target="_blank" rel="noopener"><span>Renew subscription</span><small>Renew your Washingtonian subscription online</small><b aria-hidden="true">→</b></a>
+        <button class="support-card" type="button" data-route="form-cancel"><span>Cancel subscription</span><small>Submit a cancellation request to Subscriber Services</small><b aria-hidden="true">→</b></button>
       </div>
 
       <div class="contact-strip">
         <div><span class="mini-label">Email</span><a href="mailto:washsub@washingtonian.com">washsub@washingtonian.com</a></div>
-        <div><span class="mini-label">Phone</span><a href="tel:+12022963600">202-296-3600</a></div>
       </div>
     </section>
 
@@ -263,14 +252,14 @@
       </form>
     </section>
 
-    <section class="view form-view" data-view="form-status" hidden>
+    <section class="view form-view" data-view="form-cancel" hidden>
       <div class="view-top"><button class="back-button" type="button" data-back>← Back</button></div>
       <div class="page-heading narrow">
-        <p class="eyebrow">Renewal &amp; Cancellation</p>
-        <h1>Request help with your subscription status.</h1>
-        <p class="lede">Tell Subscriber Services what you’d like to do. This form does not make an immediate change to your account.</p>
+        <p class="eyebrow">Cancellation</p>
+        <h1>We’re sorry to see you go!</h1>
+        <p class="lede">Before you cancel, we’d love the chance to help. If there’s an issue with your subscription, select the reason below and our team will see what we can do.</p>
       </div>
-      <form class="support-form" data-support-form data-category="renew-cancel">
+      <form class="support-form" data-support-form data-category="cancel-subscription">
         <div class="form-grid two">
           <label>Full name<input name="name" autocomplete="name" required></label>
           <label>Email on the account<input name="email" type="email" autocomplete="email" required></label>
@@ -286,23 +275,32 @@
             <label>ZIP code<input name="currentZip" autocomplete="postal-code" inputmode="numeric" required></label>
           </div>
         </fieldset>
-        <label>What would you like to do?<select name="request" id="subscription-status-request" required><option value="">Choose one</option><option>Renew my subscription</option><option>Cancel my subscription</option><option>Ask a question before deciding</option></select></label>
 
-        <div id="cancellation-reason-fields" hidden>
-          <label>Reason for cancellation?<select name="cancellationReason" id="cancellation-reason"><option value="">Choose one</option><option>Cost</option><option>Moving</option><option>No longer interested</option><option>Delivery issues</option><option>Digital access issues</option><option>Duplicate subscription</option><option>Other</option></select></label>
-          <label id="cancellation-other-wrap" hidden>Please tell us more<input name="cancellationReasonOther" id="cancellation-reason-other" placeholder="Reason for cancellation"></label>
-        </div>
+        <label>Why would you like to cancel?
+          <select name="cancellationReason" id="cancellation-reason" required>
+            <option value="">Choose one</option>
+            <option>Cost</option>
+            <option>Moving</option>
+            <option>No longer interested</option>
+            <option>Delivery issues</option>
+            <option>Digital access issues</option>
+            <option>Duplicate subscription</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label id="cancellation-other-wrap" hidden>Please tell us more<input name="cancellationReasonOther" id="cancellation-reason-other" placeholder="Reason for cancellation"></label>
 
         <aside class="retention-offer" id="retention-offer" hidden>
           <p class="mini-label">Subscriber Offer</p>
-          <h2>Before you cancel, take a look at our current renewal offer.</h2>
+          <h2>Before you cancel, take a look at our current subscriber offer.</h2>
           <p>If you decide to stay, use the offer below. If not, you can continue and send Subscriber Services your cancellation request.</p>
           <a class="button button-primary" id="retention-offer-link" target="_blank" rel="noopener">View Subscriber Offer</a>
         </aside>
 
-        <label>Details <span class="optional">Optional</span><textarea name="details" rows="5" placeholder="Include anything Subscriber Services should know about your request."></textarea></label>
-        <p class="request-note" id="cancel-request-note" hidden>Submitting this form sends a cancellation request to Subscriber Services. It does not immediately cancel your subscription.</p>
-        <div class="form-footer"><button class="button button-primary" type="submit">Submit Request</button><p class="form-status" role="status" aria-live="polite"></p></div>
+        <label>Anything else we should know? <span class="optional">Optional</span><textarea name="details" rows="5" placeholder="Include anything Subscriber Services should know about your request."></textarea></label>
+        <p class="request-note">Submitting this form sends a cancellation request to Subscriber Services. It does not immediately cancel your subscription.</p>
+        <input type="hidden" name="request" value="Cancel my subscription">
+        <div class="form-footer"><button class="button button-primary" type="submit">Submit Cancellation Request</button><p class="form-status" role="status" aria-live="polite"></p></div>
       </form>
     </section>
 
@@ -315,13 +313,6 @@
       <div class="button-row centered"><button class="button button-primary" type="button" data-route="home">Return to Customer Service</button></div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <div class="shell footer-inner">
-      <span>© 2026 Washingtonian Media Inc.</span>
-      <a href="https://washingtonian.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
-    </div>
-  </footer>
 
   <script src="/app.js" defer></script>
 </body>

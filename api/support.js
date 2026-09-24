@@ -109,7 +109,7 @@ async function appendRequestToSheet(request) {
     request.details.newCity || '',
     request.details.newState || '',
     request.details.newZip || '',
-    request.details.request || '',
+    request.details.request || (request.category === 'cancel-subscription' ? 'Cancel my subscription' : ''),
     request.details.cancellationReason || '',
     request.details.cancellationReasonOther || '',
     request.details.details || '',
@@ -153,7 +153,7 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Please provide the current mailing address associated with the subscription.' });
   }
 
-  if (category === 'renew-cancel' && clean(body.request, 120) === 'Cancel my subscription') {
+  if (category === 'cancel-subscription') {
     const cancellationReason = clean(body.cancellationReason, 120);
     const cancellationReasonOther = clean(body.cancellationReasonOther, 500);
     if (!cancellationReason) {

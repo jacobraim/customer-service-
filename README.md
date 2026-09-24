@@ -1,6 +1,6 @@
 # Washingtonian Customer Service
 
-Static customer-service interface for Washingtonian, deployed on Vercel. Subscriber-service requests are stored in a private Google Sheet through the Google Sheets API.
+Iframe-ready customer-service interface for Washingtonian, deployed on Vercel. The app intentionally omits a standalone site header and footer because it is designed to live inside Washingtonian.com. Subscriber-service requests are stored in a private Google Sheet through the Google Sheets API.
 
 ## Files
 
@@ -30,7 +30,7 @@ Static customer-service interface for Washingtonian, deployed on Vercel. Subscri
 
 ## Sheet columns
 
-The app records reference number, timestamp, status, request type, customer identity, account number, current mailing address, topic or delivery issue, requested new address, renew/cancel choice, cancellation reason, details, and source.
+The app records reference number, timestamp, status, request type, customer identity, account number, current mailing address, topic or delivery issue, requested new address, cancellation reason, details, and source. Renewals link directly to the external renewal page and therefore do not create Sheet rows.
 
 Every new row begins with Status `New`, so the team can later use that column for a lightweight workflow such as `New`, `In Progress`, and `Resolved`.
 
