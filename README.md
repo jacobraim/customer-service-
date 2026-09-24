@@ -1,54 +1,52 @@
 # Washingtonian Customer Service
 
-A lightweight, dependency-free customer-service app designed for deployment from Git to Vercel.
+Static customer-service interface for Washingtonian, deployed on Vercel. Subscriber-service requests are stored in a private Google Sheet through the Google Sheets API.
 
-## What changed from the prototype
+## Files
 
-- Removed the fake browser-preview screen and internal draft/placeholder language.
-- Removed the hard-coded Supabase dependency.
-- Replaced placeholder subscription and advertising contacts with Washingtonian's current public contacts.
-- Removed all email-subscriber counts and the newsletter-by-list audience table from Advertising.
-- Removed the hard-coded retention discount from the prototype; the cancellation flow now supports a configurable Shopify retention-offer URL.
-- Reworded renewal, cancellation, delivery, and address-change flows so the UI does not claim the underlying subscription system has already been updated.
-- Added the existing Washingtonian subscriber portal as the fastest self-service option.
-- Added an optional subscriber/account-number field to every Subscriber Services request.
-- Kept renewal, address-change, delivery, and cancellation actions request-only; the app does not claim that the circulation system was changed immediately.
-- Added semantic HTML, keyboard focus states, responsive layouts, reduced-motion support, and basic form validation.
-- Split the project into maintainable HTML, CSS, JS, and a small Vercel Function.
+- `index.html` - customer-facing interface
+- `styles.css` - Washingtonian styling
+- `app.js` - navigation and form behavior
+- `api/support.js` - Vercel serverless function that validates requests and appends them to Google Sheets
+- `package.json` - installs the Google API client used by the Vercel function
+- `vercel.json` - Vercel configuration
 
-## Important before public launch
+## Google Sheet setup
 
-The `/api/support` endpoint currently validates requests, creates a reference number, and writes the request to Vercel function logs. It does **not** email staff, update the circulation/subscription platform, or persist requests in a customer-service database.
+1. Create a Google Sheet for subscriber-service requests.
+2. Rename the worksheet tab to `Requests` (or set `GOOGLE_SHEET_TAB` in Vercel to another tab name).
+3. Copy the spreadsheet ID from its URL. It is the long string between `/d/` and `/edit`.
+4. In Google Cloud Console, create a project and enable the Google Sheets API.
+5. Create a service account for the project and create a JSON key for that service account.
+6. Share the Google Sheet with the service account's email address as an Editor. Do not make the sheet public.
+7. In Vercel, open the project and go to **Settings > Environment Variables**. Add:
+   - `GOOGLE_SHEET_ID` - spreadsheet ID
+   - `GOOGLE_SHEET_TAB` - `Requests` (optional; defaults to `Requests`)
+   - `GOOGLE_SERVICE_ACCOUNT_EMAIL` - `client_email` from the service-account JSON
+   - `GOOGLE_PRIVATE_KEY` - `private_key` from the service-account JSON
+8. Mark `GOOGLE_PRIVATE_KEY` as sensitive and do not commit the JSON key file to GitHub.
+9. Redeploy the Vercel project after adding the environment variables.
+10. Submit one test request. The app will automatically create the header row if the worksheet is blank and append the request below it.
 
-Connect that endpoint to `washsub@washingtonian.com` (or another approved help-desk destination) before using the forms for live customer support. The frontend should not need to change when that integration is added.
+## Sheet columns
 
-## Shopify retention offer
+The app records reference number, timestamp, status, request type, customer identity, account number, current mailing address, topic or delivery issue, requested new address, renew/cancel choice, cancellation reason, details, and source.
 
-The cancellation flow is already wired for a retention offer, but it stays hidden until a real Shopify URL exists. In `app.js`, set:
+Every new row begins with Status `New`, so the team can later use that column for a lightweight workflow such as `New`, `In Progress`, and `Resolved`.
+
+## Security notes
+
+- The Google service-account private key belongs only in Vercel environment variables.
+- Do not commit a Google credentials JSON file to the repository.
+- Keep the Sheet restricted to the staff who need subscriber information.
+- The API writes customer-entered cell values using Google Sheets' `RAW` mode so content cannot be interpreted as spreadsheet formulas.
+
+## Retention offer
+
+The Shopify destination is defined near the top of `app.js`:
 
 ```js
-const RETENTION_OFFER_URL = 'https://your-final-shopify-offer-url';
+const RETENTION_OFFER_URL = 'https://shop.washingtonian.com/';
 ```
 
-When configured, customers who choose **Cancel my subscription** will see the offer before they submit a cancellation request. Choosing the offer opens Shopify in a new tab; ignoring it and submitting the form still sends a cancellation request only.
-
-## Deploy to Vercel
-
-1. Create a Git repository and add the contents of this folder at the repository root.
-2. Push the repository to GitHub/GitLab/Bitbucket.
-3. Import the repository into Vercel.
-4. Framework preset: **Other**.
-5. No build command or output directory is required.
-6. Deploy.
-
-## Local preview
-
-Run any static file server from the project root to review the frontend. The support forms require Vercel (or another server that implements `/api/support`) to submit successfully.
-
-## Current public links/contact values used
-
-- Subscribe: `https://washingtonian.com/subscribe/`
-- Subscriber portal: `https://w1.buysub.com/servlet/CSGateway?cds_mag_code=WSH&cds_page_id=22265`
-- Subscriber Services: `washsub@washingtonian.com`
-- Advertising: `AdInfo@washingtonian.com`
-- General phone: `202-296-3600`
+Replace that one URL when the dedicated retention-offer page is ready.

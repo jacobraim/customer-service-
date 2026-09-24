@@ -1,0 +1,9 @@
+{
+  "name": "washingtonian-customer-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Washingtonian customer service app",
+  "dependencies": {
+    "googleapis": "^160.0.0"
+  }
+}
